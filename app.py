@@ -10,15 +10,15 @@ def check_profanity(word):
 def check_profanity_api():
     data = request.get_json()
 
-    if 'word' not in data:
-        return jsonify({'error': 'Missing "word" parameter'}), 400
+    if 'sentence' not in data:
+        return jsonify({'error': 'Missing "sentence" parameter'}), 400
 
-    word = data['word']
+    word = data['sentence']
     is_profane = check_profanity(word)
 
-    response = {'word': word, 'is_profane': bool(is_profane)}
+    response = {'sentence': word, 'is_profane': bool(is_profane)}
 
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True)
