@@ -1,0 +1,5 @@
+Flask
+Gunicorn
+alt-profanity-check
+sklearn
+scikit-learn
