@@ -4,7 +4,9 @@ from profanity_check import predict
 app = Flask(__name__)
 
 def check_profanity(word):
-    return predict([word])[0]
+    words = word.split()
+    censored_words = [word if not predict([word])[0] else '*' * len(word) for word in words]
+    return [' '.join(censored_words) , predict([word])[0]]
 
 @app.route('/check_profanity', methods=['POST'])
 def check_profanity_api():
@@ -14,9 +16,9 @@ def check_profanity_api():
         return jsonify({'error': 'Missing "sentence" parameter'}), 400
 
     word = data['sentence']
-    is_profane = check_profanity(word)
+    [sent,is_profane] = check_profanity(word)
 
-    response = {'sentence': word, 'is_profane': bool(is_profane)}
+    response = {'sentence': word, 'is_profane': bool(is_profane),'censored':sent}
 
     return jsonify(response)
 
