@@ -8,9 +8,10 @@ def check_profanity(word):
     censored_words = [word if not predict([word])[0] else '*' * len(word) for word in words]
     return [' '.join(censored_words) , predict([word])[0]]
 
-@app.route('/check_profanity', methods=['POST'])
+@app.route('/check_profanity', methods=['POST',"GET"])
 def check_profanity_api():
     data = request.get_json()
+    print(data)
 
     if 'sentence' not in data:
         return jsonify({'error': 'Missing "sentence" parameter'}), 400
@@ -23,4 +24,4 @@ def check_profanity_api():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
